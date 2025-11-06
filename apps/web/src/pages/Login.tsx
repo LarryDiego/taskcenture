@@ -13,7 +13,6 @@ export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
-  const [role, setRole] = useState('COLLABORATOR');
   const [isSignup, setIsSignup] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -36,12 +35,11 @@ export const Login = () => {
 
     try {
       if (isSignup) {
-        // Register new user
-        await authApi.register(username, email, password, role);
+        // Register new user - hardcoded as ADMINISTRATOR
+        await authApi.register(username, email, password, 'ADMINISTRATOR');
         toast.success('Account created successfully! Please login.');
         setIsSignup(false);
         setUsername('');
-        setRole('ADMINISTRATOR');
       } else {
         // Login existing user
         await login(email, password);

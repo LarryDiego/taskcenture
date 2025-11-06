@@ -379,10 +379,10 @@ export const useStore = create<AppState>((set, get) => ({
     }
   },
 
-  createProject: async (name: string, description: string) => {
+  createProject: async (name: string, description: string, teamMemberIds: number[] = []) => {
     try {
       // Create project via API and get the real project ID from backend
-      const newProject = await projectsApi.create(name, description, get().user.id);
+      const newProject = await projectsApi.create(name, description, get().user.id, teamMemberIds);
       
       set((state) => ({
         projects: [...state.projects, newProject],
