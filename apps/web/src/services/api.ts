@@ -65,6 +65,23 @@ export const usersApi = {
   },
 };
 
+// Admin API
+export const adminApi = {
+  getAllUsers: async (): Promise<Array<{ id: number; username: string; email: string; role: string }>> => {
+    const response = await api.get('/admin/users');
+    return response.data;
+  },
+  
+  updateUserRole: async (userId: number, role: string): Promise<{ id: number; username: string; email: string; role: string }> => {
+    const response = await api.put(`/admin/users/${userId}/role`, { role });
+    return response.data;
+  },
+  
+  deleteUser: async (userId: number): Promise<void> => {
+    await api.delete(`/admin/users/${userId}`);
+  },
+};
+
 // Transform backend status to frontend format
 const transformStatus = (status: string): TaskStatus => {
   const statusMap: Record<string, TaskStatus> = {
@@ -219,8 +236,13 @@ export const projectsApi = {
     }
   },
 
-  create: async (name: string, description: string, id: number): Promise<Project> => {
-    const response = await api.post('/projects', { name, description, owner: { id } });
+  create: async (name: string, description: string, id: number, teamMemberIds: number[] = []): Promise<Project> => {
+    const response = await api.post('/projects', { 
+      name, 
+      description, 
+      owner: { id },
+      teamMembers: teamMemberIds.map(memberId => ({ id: memberId }))
+    });
     return transformProject(response.data, []);
   },
 
@@ -231,6 +253,16 @@ export const projectsApi = {
 
   delete: async (id: string): Promise<void> => {
     await api.delete(`/projects/${id}`);
+  },
+
+  addTeamMember: async (projectId: string, userId: number): Promise<Project> => {
+    const response = await api.post(`/projects/${projectId}/team`, { userId });
+    return transformProject(response.data, []);
+  },
+
+  removeTeamMember: async (projectId: string, userId: number): Promise<Project> => {
+    const response = await api.delete(`/projects/${projectId}/team/${userId}`);
+    return transformProject(response.data, []);
   },
 };
 

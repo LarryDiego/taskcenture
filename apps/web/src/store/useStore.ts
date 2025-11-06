@@ -62,7 +62,7 @@ interface AppState {
   updateTask: (taskId: string, updates: Partial<Task>) => Promise<void>;
   deleteTask: (taskId: string) => Promise<void>;
   addComment: (taskId: string, comment: string) => void;
-  createProject: (name: string, description: string) => void;
+  createProject: (name: string, description: string, teamMemberIds?: number[]) => void;
   updateProject: (projectId: string, name: string, description: string) => void;
   deleteProject: (projectId: string) => void;
   createTask: (

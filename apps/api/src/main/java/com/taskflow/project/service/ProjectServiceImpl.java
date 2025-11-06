@@ -1,9 +1,12 @@
 package com.taskflow.project.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.taskflow.auth.model.User;
+import com.taskflow.auth.repository.UserRepository;
 import com.taskflow.exception.ResourceNotFoundException;
 import com.taskflow.project.model.Project;
 import com.taskflow.project.repository.ProjectRepository;
@@ -12,9 +15,11 @@ import com.taskflow.project.repository.ProjectRepository;
 public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
+    private final UserRepository userRepository;
 
-    public ProjectServiceImpl(ProjectRepository projectRepository) {
+    public ProjectServiceImpl(ProjectRepository projectRepository, UserRepository userRepository) {
         this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -23,8 +28,15 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<Project> getAllProjects() {
-        return projectRepository.findAll();
+    public List<Project> getAllProjects(Long userId) {
+        List<Project> allProjects = projectRepository.findAll();
+        // Filter projects where user is owner or team member
+        return allProjects.stream()
+            .filter(project -> 
+                (project.getOwner() != null && project.getOwner().getId().equals(userId)) ||
+                project.getTeamMembers().stream().anyMatch(member -> member.getId().equals(userId))
+            )
+            .collect(Collectors.toList());
     }
 
     @Override
@@ -49,5 +61,30 @@ public class ProjectServiceImpl implements ProjectService {
             throw new ResourceNotFoundException("Project", "id", id);
         }
         projectRepository.deleteById(id);
+    }
+
+    @Override
+    public Project addTeamMember(Long projectId, Long userId) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new ResourceNotFoundException("Project", "id", projectId));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+        
+        if (!project.getTeamMembers().contains(user)) {
+            project.getTeamMembers().add(user);
+            return projectRepository.save(project);
+        }
+        return project;
+    }
+
+    @Override
+    public Project removeTeamMember(Long projectId, Long userId) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new ResourceNotFoundException("Project", "id", projectId));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+        
+        project.getTeamMembers().remove(user);
+        return projectRepository.save(project);
     }
 }

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { LogOut } from 'lucide-react';
+import { LogOut, Users, Settings } from 'lucide-react';
 import { useStore } from '@/store/useStore';
 
 export const Header = () => {
@@ -30,6 +30,26 @@ export const Header = () => {
               </span>
               <Badge variant="secondary">{user.role}</Badge>
             </div>
+            {user.role === 'Administrator' && (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => navigate('/admin/users')}
+                className="gap-2"
+              >
+                <Users className="h-4 w-4" />
+                Manage Users
+              </Button>
+            )}
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={() => navigate('/settings')}
+              className="gap-2"
+            >
+              <Settings className="h-4 w-4" />
+              Settings
+            </Button>
             <Button 
               variant="outline" 
               size="sm" 

@@ -1,0 +1,103 @@
+{
+  "app": {
+    "name": "taskCenture"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "create": "Crear",
+    "back": "Volver",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "all": "Todos",
+    "logout": "Cerrar sesión",
+    "settings": "Configuración"
+  },
+  "auth": {
+    "login": "Iniciar sesión",
+    "signup": "Registrarse",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "username": "Nombre de usuario",
+    "welcomeBack": "Bienvenido de nuevo",
+    "createAccount": "Crea tu cuenta",
+    "alreadyHaveAccount": "¿Ya tienes una cuenta? Iniciar sesión",
+    "dontHaveAccount": "¿No tienes una cuenta? Regístrate"
+  },
+  "dashboard": {
+    "title": "Panel",
+    "welcome": "Bienvenido de nuevo",
+    "myProjects": "Mis Proyectos",
+    "createProject": "Crear Proyecto",
+    "noProjects": "Aún no hay proyectos. ¡Crea tu primer proyecto para comenzar!",
+    "progress": "Progreso",
+    "tasks": "Tareas",
+    "completed": "Completadas"
+  },
+  "project": {
+    "name": "Nombre del Proyecto",
+    "description": "Descripción",
+    "createNew": "Crear Nuevo Proyecto",
+    "edit": "Editar Proyecto",
+    "delete": "Eliminar Proyecto",
+    "deleteConfirm": "¿Estás seguro de que quieres eliminar",
+    "deleteWarning": "Esta acción no se puede deshacer y eliminará todas las tareas de este proyecto.",
+    "backToDashboard": "Volver al Panel"
+  },
+  "task": {
+    "title": "Título",
+    "description": "Descripción",
+    "status": "Estado",
+    "priority": "Prioridad",
+    "assignee": "Asignado",
+    "dueDate": "Fecha de Vencimiento",
+    "comments": "Comentarios",
+    "createNew": "Crear Tarea",
+    "details": "Detalles de la Tarea",
+    "unassigned": "Sin asignar",
+    "addComment": "Agregar Comentario",
+    "todo": "Por Hacer",
+    "inProgress": "En Progreso",
+    "done": "Hecho",
+    "low": "Baja",
+    "medium": "Media",
+    "high": "Alta"
+  },
+  "kanban": {
+    "exportCSV": "Exportar CSV",
+    "searchPlaceholder": "Buscar tareas..."
+  },
+  "users": {
+    "management": "Gestión de Usuarios",
+    "manageUsers": "Gestionar Usuarios",
+    "username": "Nombre de Usuario",
+    "email": "Correo Electrónico",
+    "role": "Rol",
+    "actions": "Acciones",
+    "deleteUser": "Eliminar Usuario",
+    "deleteConfirm": "¿Estás seguro de que quieres eliminar al usuario",
+    "cannotDeleteYourself": "No puedes eliminarte a ti mismo",
+    "cannotChangeOwnRole": "No puedes cambiar tu propio rol",
+    "collaborator": "Colaborador",
+    "manager": "Gerente",
+    "administrator": "Administrador",
+    "manageRoles": "Gestionar roles y permisos de usuarios"
+  },
+  "settings": {
+    "title": "Configuración",
+    "language": "Idioma",
+    "theme": "Tema",
+    "appearance": "Apariencia",
+    "preferences": "Preferencias",
+    "light": "Claro",
+    "dark": "Oscuro",
+    "english": "Inglés",
+    "portuguese": "Portugués",
+    "spanish": "Español",
+    "selectLanguage": "Seleccionar Idioma",
+    "selectTheme": "Seleccionar Tema"
+  }
+}

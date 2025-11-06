@@ -6,7 +6,7 @@ import { TaskDetailModal } from '@/components/TaskDetailModal';
 import { CreateTaskModal } from '@/components/CreateTaskModal';
 import { TaskFilters } from '@/components/TaskFilters';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Plus } from 'lucide-react';
+import { ArrowLeft, Plus, Download } from 'lucide-react';
 import { useStore } from '@/store/useStore';
 import { DndContext, DragEndEvent, DragOverlay, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { TaskStatus } from '@/store/useStore';
@@ -77,6 +77,44 @@ export const KanbanBoard = () => {
     selectTask(null);
   };
 
+  const downloadCSV = () => {
+    if (!selectedProject) return;
+
+    // Define CSV headers
+    const headers = ['ID', 'Title', 'Description', 'Status', 'Priority', 'Assignee', 'Due Date', 'Comments'];
+    
+    // Convert tasks to CSV rows
+    const rows = selectedProject.tasks.map(task => [
+      task.id,
+      `"${task.title.replace(/"/g, '""')}"`, // Escape quotes
+      `"${task.description.replace(/"/g, '""')}"`,
+      task.status,
+      task.priority,
+      task.assignee || 'Unassigned',
+      task.dueDate,
+      task.comments.length
+    ]);
+
+    // Combine headers and rows
+    const csvContent = [
+      headers.join(','),
+      ...rows.map(row => row.join(','))
+    ].join('\n');
+
+    // Create blob and download
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    
+    link.setAttribute('href', url);
+    link.setAttribute('download', `${selectedProject.name.replace(/[^a-z0-9]/gi, '_')}_tasks.csv`);
+    link.style.visibility = 'hidden';
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   if (!selectedProject) return null;
 
   const todoTasks = filteredTasks.filter((task) => task.status === 'todo');
@@ -101,10 +139,16 @@ export const KanbanBoard = () => {
               <h2 className="text-3xl font-bold mb-2">{selectedProject.name}</h2>
               <p className="text-muted-foreground">{selectedProject.description}</p>
             </div>
-            <Button onClick={() => setIsCreateTaskModalOpen(true)} className="gap-2">
-              <Plus className="h-4 w-4" />
-              Create Task
-            </Button>
+            <div className="flex gap-2">
+              <Button onClick={downloadCSV} variant="outline" className="gap-2">
+                <Download className="h-4 w-4" />
+                Export CSV
+              </Button>
+              <Button onClick={() => setIsCreateTaskModalOpen(true)} className="gap-2">
+                <Plus className="h-4 w-4" />
+                Create Task
+              </Button>
+            </div>
           </div>
         </div>
 

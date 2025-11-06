@@ -1,0 +1,103 @@
+{
+  "app": {
+    "name": "taskCenture"
+  },
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "back": "Back",
+    "search": "Search",
+    "filter": "Filter",
+    "all": "All",
+    "logout": "Logout",
+    "settings": "Settings"
+  },
+  "auth": {
+    "login": "Login",
+    "signup": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "username": "Username",
+    "welcomeBack": "Welcome back",
+    "createAccount": "Create your account",
+    "alreadyHaveAccount": "Already have an account? Login",
+    "dontHaveAccount": "Don't have an account? Sign up"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back",
+    "myProjects": "My Projects",
+    "createProject": "Create Project",
+    "noProjects": "No projects yet. Create your first project to get started!",
+    "progress": "Progress",
+    "tasks": "Tasks",
+    "completed": "Completed"
+  },
+  "project": {
+    "name": "Project Name",
+    "description": "Description",
+    "createNew": "Create New Project",
+    "edit": "Edit Project",
+    "delete": "Delete Project",
+    "deleteConfirm": "Are you sure you want to delete",
+    "deleteWarning": "This action cannot be undone and will delete all tasks in this project.",
+    "backToDashboard": "Back to Dashboard"
+  },
+  "task": {
+    "title": "Title",
+    "description": "Description",
+    "status": "Status",
+    "priority": "Priority",
+    "assignee": "Assignee",
+    "dueDate": "Due Date",
+    "comments": "Comments",
+    "createNew": "Create Task",
+    "details": "Task Details",
+    "unassigned": "Unassigned",
+    "addComment": "Add Comment",
+    "todo": "To Do",
+    "inProgress": "In Progress",
+    "done": "Done",
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High"
+  },
+  "kanban": {
+    "exportCSV": "Export CSV",
+    "searchPlaceholder": "Search tasks..."
+  },
+  "users": {
+    "management": "User Management",
+    "manageUsers": "Manage Users",
+    "username": "Username",
+    "email": "Email",
+    "role": "Role",
+    "actions": "Actions",
+    "deleteUser": "Delete User",
+    "deleteConfirm": "Are you sure you want to delete user",
+    "cannotDeleteYourself": "Cannot delete yourself",
+    "cannotChangeOwnRole": "Cannot change your own role",
+    "collaborator": "Collaborator",
+    "manager": "Manager",
+    "administrator": "Administrator",
+    "manageRoles": "Manage user roles and permissions"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "theme": "Theme",
+    "appearance": "Appearance",
+    "preferences": "Preferences",
+    "light": "Light",
+    "dark": "Dark",
+    "english": "English",
+    "portuguese": "Portuguese",
+    "spanish": "Spanish",
+    "selectLanguage": "Select Language",
+    "selectTheme": "Select Theme"
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "app": {
+    "name": "taskCenture"
+  },
+  "common": {
+    "loading": "Carregando...",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "create": "Criar",
+    "back": "Voltar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "all": "Todos",
+    "logout": "Sair",
+    "settings": "Configurações"
+  },
+  "auth": {
+    "login": "Entrar",
+    "signup": "Cadastrar",
+    "email": "E-mail",
+    "password": "Senha",
+    "username": "Nome de usuário",
+    "welcomeBack": "Bem-vindo de volta",
+    "createAccount": "Crie sua conta",
+    "alreadyHaveAccount": "Já tem uma conta? Entrar",
+    "dontHaveAccount": "Não tem uma conta? Cadastre-se"
+  },
+  "dashboard": {
+    "title": "Painel",
+    "welcome": "Bem-vindo de volta",
+    "myProjects": "Meus Projetos",
+    "createProject": "Criar Projeto",
+    "noProjects": "Nenhum projeto ainda. Crie seu primeiro projeto para começar!",
+    "progress": "Progresso",
+    "tasks": "Tarefas",
+    "completed": "Concluídas"
+  },
+  "project": {
+    "name": "Nome do Projeto",
+    "description": "Descrição",
+    "createNew": "Criar Novo Projeto",
+    "edit": "Editar Projeto",
+    "delete": "Excluir Projeto",
+    "deleteConfirm": "Tem certeza de que deseja excluir",
+    "deleteWarning": "Esta ação não pode ser desfeita e excluirá todas as tarefas deste projeto.",
+    "backToDashboard": "Voltar ao Painel"
+  },
+  "task": {
+    "title": "Título",
+    "description": "Descrição",
+    "status": "Status",
+    "priority": "Prioridade",
+    "assignee": "Responsável",
+    "dueDate": "Data de Vencimento",
+    "comments": "Comentários",
+    "createNew": "Criar Tarefa",
+    "details": "Detalhes da Tarefa",
+    "unassigned": "Não atribuído",
+    "addComment": "Adicionar Comentário",
+    "todo": "A Fazer",
+    "inProgress": "Em Progresso",
+    "done": "Concluído",
+    "low": "Baixa",
+    "medium": "Média",
+    "high": "Alta"
+  },
+  "kanban": {
+    "exportCSV": "Exportar CSV",
+    "searchPlaceholder": "Buscar tarefas..."
+  },
+  "users": {
+    "management": "Gerenciamento de Usuários",
+    "manageUsers": "Gerenciar Usuários",
+    "username": "Nome de Usuário",
+    "email": "E-mail",
+    "role": "Função",
+    "actions": "Ações",
+    "deleteUser": "Excluir Usuário",
+    "deleteConfirm": "Tem certeza de que deseja excluir o usuário",
+    "cannotDeleteYourself": "Não é possível excluir a si mesmo",
+    "cannotChangeOwnRole": "Não é possível alterar sua própria função",
+    "collaborator": "Colaborador",
+    "manager": "Gerente",
+    "administrator": "Administrador",
+    "manageRoles": "Gerenciar funções e permissões de usuários"
+  },
+  "settings": {
+    "title": "Configurações",
+    "language": "Idioma",
+    "theme": "Tema",
+    "appearance": "Aparência",
+    "preferences": "Preferências",
+    "light": "Claro",
+    "dark": "Escuro",
+    "english": "Inglês",
+    "portuguese": "Português",
+    "spanish": "Espanhol",
+    "selectLanguage": "Selecionar Idioma",
+    "selectTheme": "Selecionar Tema"
+  }
+}
