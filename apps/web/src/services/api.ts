@@ -299,9 +299,14 @@ export const tasksApi = {
   },
 
   updateStatus: async (id: string, projectId: string, status: TaskStatus): Promise<Task> => {
+    if (!id || !projectId) {
+      throw new Error(`Invalid parameters: id="${id}", projectId="${projectId}"`);
+    }
+    
     const response = await api.put(`/projects/${projectId}/tasks/${id}`, {
       status: transformStatusToBackend(status),
     });
+    
     return transformTask(response.data);
   },
 };

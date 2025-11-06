@@ -41,7 +41,7 @@ export const Login = () => {
         toast.success('Account created successfully! Please login.');
         setIsSignup(false);
         setUsername('');
-        setRole('COLLABORATOR');
+        setRole('ADMINISTRATOR');
       } else {
         // Login existing user
         await login(email, password);

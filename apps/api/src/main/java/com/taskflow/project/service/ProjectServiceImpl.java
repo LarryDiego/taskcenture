@@ -1,10 +1,12 @@
 package com.taskflow.project.service;
 
-import com.taskflow.project.model.Project;
-import com.taskflow.project.repository.ProjectRepository;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.taskflow.exception.ResourceNotFoundException;
+import com.taskflow.project.model.Project;
+import com.taskflow.project.repository.ProjectRepository;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -27,22 +29,25 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project getProjectById(Long id) {
-        return projectRepository.findById(id).orElse(null);
+        return projectRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Project", "id", id));
     }
 
     @Override
     public Project updateProject(Long id, Project project) {
-        Project existingProject = getProjectById(id);
-        if (existingProject != null) {
-            existingProject.setName(project.getName());
-            existingProject.setDescription(project.getDescription());
-            return projectRepository.save(existingProject);
-        }
-        return null;
+        Project existingProject = projectRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Project", "id", id));
+        
+        existingProject.setName(project.getName());
+        existingProject.setDescription(project.getDescription());
+        return projectRepository.save(existingProject);
     }
 
     @Override
     public void deleteProject(Long id) {
+        if (!projectRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Project", "id", id);
+        }
         projectRepository.deleteById(id);
     }
 }

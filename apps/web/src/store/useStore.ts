@@ -193,18 +193,23 @@ export const useStore = create<AppState>((set, get) => ({
     // Find which project the task belongs to
     const projects = get().projects;
     const project = projects.find((p) => p.tasks.some((t) => t.id === taskId));
-    if (!project) return;
+    if (!project) {
+      console.error('Project not found for task:', taskId);
+      return;
+    }
 
     // Find the current task
     const currentTask = project.tasks.find((t) => t.id === taskId);
-    if (!currentTask) return;
+    if (!currentTask) {
+      console.error('Task not found:', taskId);
+      return;
+    }
+
+    console.log('Updating task status:', { taskId, projectId: project.id, status });
 
     try {
-      // Update task status via API, passing the full task to preserve all fields
-      let updatedTask = await tasksApi.update(taskId, project.id, {
-        ...currentTask,
-        status,
-      });
+      // Update task status via API using the dedicated updateStatus method
+      let updatedTask = await tasksApi.updateStatus(taskId, project.id, status);
 
       // Enrich with user info if needed
       updatedTask = await enrichTaskWithUserInfo(updatedTask);
@@ -375,41 +380,60 @@ export const useStore = create<AppState>((set, get) => ({
   },
 
   createProject: async (name: string, description: string) => {
-    const newProject: Project = {
-      id: Date.now().toString(),
-      name,
-      description,
-      tasks: [],
-    };
-    await projectsApi.create(name, description, get().user.id);
-    set((state) => ({
-      projects: [...state.projects, newProject],
-    }));
+    try {
+      // Create project via API and get the real project ID from backend
+      const newProject = await projectsApi.create(name, description, get().user.id);
+      
+      set((state) => ({
+        projects: [...state.projects, newProject],
+      }));
+      
+      toast.success('Project created successfully');
+    } catch (error) {
+      console.error('Failed to create project:', error);
+      toast.error('Failed to create project');
+    }
   },
 
   updateProject: async (projectId: string, name: string, description: string) => {
-    set((state) => ({
-      projects: state.projects.map((project) =>
-        project.id === projectId ? { ...project, name, description } : project
-      ),
-    }));
+    try {
+      await projectsApi.update(projectId, name, description);
+      
+      set((state) => ({
+        projects: state.projects.map((project) =>
+          project.id === projectId ? { ...project, name, description } : project
+        ),
+      }));
 
-    await projectsApi.update(projectId, name, description);
-    const selectedProject = get().selectedProject;
-    if (selectedProject && selectedProject.id === projectId) {
-      set({ selectedProject: { ...selectedProject, name, description } });
+      const selectedProject = get().selectedProject;
+      if (selectedProject && selectedProject.id === projectId) {
+        set({ selectedProject: { ...selectedProject, name, description } });
+      }
+      
+      toast.success('Project updated successfully');
+    } catch (error) {
+      console.error('Failed to update project:', error);
+      toast.error('Failed to update project');
     }
   },
 
   deleteProject: async (projectId: string) => {
-    set((state) => ({
-      projects: state.projects.filter((project) => project.id !== projectId),
-    }));
+    try {
+      await projectsApi.delete(projectId);
+      
+      set((state) => ({
+        projects: state.projects.filter((project) => project.id !== projectId),
+      }));
 
-    await projectsApi.delete(projectId);
-    const selectedProject = get().selectedProject;
-    if (selectedProject && selectedProject.id === projectId) {
-      set({ selectedProject: null });
+      const selectedProject = get().selectedProject;
+      if (selectedProject && selectedProject.id === projectId) {
+        set({ selectedProject: null });
+      }
+      
+      toast.success('Project deleted successfully');
+    } catch (error) {
+      console.error('Failed to delete project:', error);
+      toast.error('Failed to delete project');
     }
   },
 
