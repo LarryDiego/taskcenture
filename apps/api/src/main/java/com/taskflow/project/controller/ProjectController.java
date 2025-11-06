@@ -18,7 +18,7 @@ public class ProjectController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMINISTRATOR')")
     public Project createProject(@RequestBody Project project) {
         return projectService.createProject(project);
     }
@@ -34,13 +34,13 @@ public class ProjectController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasRole('MANAGER', 'ADMINISTRATOR')")
     public Project updateProject(@PathVariable Long id, @RequestBody Project project) {
         return projectService.updateProject(id, project);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasRole('MANAGER', 'ADMINISTRATOR')")
     public void deleteProject(@PathVariable Long id) {
         projectService.deleteProject(id);
     }
