@@ -159,6 +159,8 @@ const transformProject = (backendProject: any, tasks: Task[] = []): Project => (
   name: backendProject.name || '',
   description: backendProject.description || '',
   tasks,
+  teamMembers: backendProject.teamMembers || [],
+  owner: backendProject.owner || undefined,
 });
 
 // Projects API
@@ -246,8 +248,12 @@ export const projectsApi = {
     return transformProject(response.data, []);
   },
 
-  update: async (id: string, name: string, description: string): Promise<Project> => {
-    const response = await api.put(`/projects/${id}`, { name, description });
+  update: async (id: string, name: string, description: string, teamMemberIds: number[] = []): Promise<Project> => {
+    const response = await api.put(`/projects/${id}`, { 
+      name, 
+      description,
+      teamMembers: teamMemberIds.map(memberId => ({ id: memberId }))
+    });
     return transformProject(response.data, []);
   },
 

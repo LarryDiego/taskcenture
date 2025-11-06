@@ -3,8 +3,10 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { LogOut, Users, Settings } from 'lucide-react';
 import { useStore } from '@/store/useStore';
+import { useTranslation } from 'react-i18next';
 
 export const Header = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { user, logout } = useStore();
 
@@ -38,7 +40,7 @@ export const Header = () => {
                 className="gap-2"
               >
                 <Users className="h-4 w-4" />
-                Manage Users
+                {t('users.manageUsers')}
               </Button>
             )}
             <Button 
@@ -48,7 +50,7 @@ export const Header = () => {
               className="gap-2"
             >
               <Settings className="h-4 w-4" />
-              Settings
+              {t('common.settings')}
             </Button>
             <Button 
               variant="outline" 
@@ -57,7 +59,7 @@ export const Header = () => {
               className="gap-2"
             >
               <LogOut className="h-4 w-4" />
-              Logout
+              {t('common.logout')}
             </Button>
           </div>
         )}

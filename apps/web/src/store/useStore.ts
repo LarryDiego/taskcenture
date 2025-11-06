@@ -40,6 +40,8 @@ export interface Project {
   name: string;
   description: string;
   tasks: Task[];
+  teamMembers?: Array<{ id: number; username: string; email: string }>;
+  owner?: { id: number; username: string; email: string };
 }
 
 export interface User {
@@ -63,7 +65,7 @@ interface AppState {
   deleteTask: (taskId: string) => Promise<void>;
   addComment: (taskId: string, comment: string) => void;
   createProject: (name: string, description: string, teamMemberIds?: number[]) => void;
-  updateProject: (projectId: string, name: string, description: string) => void;
+  updateProject: (projectId: string, name: string, description: string, teamMemberIds?: number[]) => void;
   deleteProject: (projectId: string) => void;
   createTask: (
     projectId: string,
@@ -395,9 +397,9 @@ export const useStore = create<AppState>((set, get) => ({
     }
   },
 
-  updateProject: async (projectId: string, name: string, description: string) => {
+  updateProject: async (projectId: string, name: string, description: string, teamMemberIds: number[] = []) => {
     try {
-      await projectsApi.update(projectId, name, description);
+      await projectsApi.update(projectId, name, description, teamMemberIds);
       
       set((state) => ({
         projects: state.projects.map((project) =>

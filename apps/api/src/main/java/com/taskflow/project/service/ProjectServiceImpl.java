@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.taskflow.auth.model.User;
 import com.taskflow.auth.repository.UserRepository;
@@ -23,11 +24,17 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    @Transactional
     public Project createProject(Project project) {
+        // Ensure the owner is always in the team members
+        if (project.getOwner() != null && !project.getTeamMembers().contains(project.getOwner())) {
+            project.getTeamMembers().add(project.getOwner());
+        }
         return projectRepository.save(project);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Project> getAllProjects(Long userId) {
         List<Project> allProjects = projectRepository.findAll();
         // Filter projects where user is owner or team member
@@ -46,13 +53,37 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    @Transactional
     public Project updateProject(Long id, Project project) {
         Project existingProject = projectRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Project", "id", id));
         
         existingProject.setName(project.getName());
         existingProject.setDescription(project.getDescription());
-        return projectRepository.save(existingProject);
+        
+        // Update team members if provided
+        if (project.getTeamMembers() != null) {
+            // Clear existing team members
+            existingProject.getTeamMembers().clear();
+            
+            // Add new team members
+            for (User member : project.getTeamMembers()) {
+                User user = userRepository.findById(member.getId())
+                        .orElseThrow(() -> new ResourceNotFoundException("User", "id", member.getId()));
+                existingProject.getTeamMembers().add(user);
+            }
+            
+            // Always ensure the owner is in the team members if owner exists
+            if (existingProject.getOwner() != null && 
+                !existingProject.getTeamMembers().contains(existingProject.getOwner())) {
+                existingProject.getTeamMembers().add(existingProject.getOwner());
+            }
+        }
+        
+        Project savedProject = projectRepository.save(existingProject);
+        // Force a flush to ensure changes are persisted
+        projectRepository.flush();
+        return savedProject;
     }
 
     @Override

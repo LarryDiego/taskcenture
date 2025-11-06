@@ -33,7 +33,7 @@ public class Project {
     @ManyToOne
     private User owner;
     
-    @ManyToMany
+    @ManyToMany(fetch = jakarta.persistence.FetchType.EAGER)
     @JoinTable(
         name = "project_team_members",
         joinColumns = @JoinColumn(name = "project_id"),

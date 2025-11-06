@@ -14,7 +14,10 @@
     "filter": "Filtrar",
     "all": "Todos",
     "logout": "Sair",
-    "settings": "Configurações"
+    "settings": "Configurações",
+    "success": "Sucesso",
+    "error": "Erro",
+    "pleaseEnter": "Por favor, insira"
   },
   "auth": {
     "login": "Entrar",
@@ -25,7 +28,16 @@
     "welcomeBack": "Bem-vindo de volta",
     "createAccount": "Crie sua conta",
     "alreadyHaveAccount": "Já tem uma conta? Entrar",
-    "dontHaveAccount": "Não tem uma conta? Cadastre-se"
+    "dontHaveAccount": "Não tem uma conta? Cadastre-se",
+    "fillAllFields": "Por favor, preencha todos os campos",
+    "enterUsername": "Por favor, insira um nome de usuário",
+    "accountCreated": "Conta criada com sucesso! Por favor, faça login.",
+    "welcomeBackMsg": "Bem-vindo de volta!",
+    "registrationFailed": "Falha no cadastro",
+    "loginFailed": "Falha no login",
+    "emailPlaceholder": "voce@exemplo.com",
+    "usernamePlaceholder": "joaosilva",
+    "passwordPlaceholder": "••••••••"
   },
   "dashboard": {
     "title": "Painel",
@@ -33,6 +45,9 @@
     "myProjects": "Meus Projetos",
     "createProject": "Criar Projeto",
     "noProjects": "Nenhum projeto ainda. Crie seu primeiro projeto para começar!",
+    "createFirstProject": "Comece criando seu primeiro projeto para organizar suas tarefas e colaborar com sua equipe.",
+    "waitForProject": "Você verá projetos aqui assim que um administrador ou gerente adicionar você a um projeto.",
+    "manageProgress": "Gerencie e acompanhe o progresso de todos os seus projetos",
     "progress": "Progresso",
     "tasks": "Tarefas",
     "completed": "Concluídas"
@@ -45,7 +60,23 @@
     "delete": "Excluir Projeto",
     "deleteConfirm": "Tem certeza de que deseja excluir",
     "deleteWarning": "Esta ação não pode ser desfeita e excluirá todas as tarefas deste projeto.",
-    "backToDashboard": "Voltar ao Painel"
+    "backToDashboard": "Voltar ao Painel",
+    "update": "Atualizar Projeto",
+    "updateDetails": "Atualizar detalhes do projeto e gerenciar membros da equipe",
+    "addToOrganize": "Adicionar um novo projeto para organizar suas tarefas",
+    "enterName": "Digite o nome do projeto",
+    "enterDescription": "Digite a descrição do projeto",
+    "teamMembers": "Membros da Equipe",
+    "owner": "Proprietário",
+    "youOwner": "Você (Proprietário)",
+    "loadingUsers": "Carregando usuários...",
+    "noUsersAvailable": "Nenhum usuário disponível",
+    "additionalMembers": "membro(s) adicional(is) selecionado(s)",
+    "membersSelected": "selecionados",
+    "createdSuccess": "Projeto criado com sucesso",
+    "updatedSuccess": "Projeto atualizado com sucesso",
+    "failedToLoad": "Falha ao carregar usuários",
+    "pleaseEnterName": "Por favor, insira um nome de projeto"
   },
   "task": {
     "title": "Título",

@@ -8,8 +8,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useStore } from '@/store/useStore';
 import { toast } from 'sonner';
 import { authApi } from '@/services/api';
+import { useTranslation } from 'react-i18next';
 
 export const Login = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
@@ -22,12 +24,12 @@ export const Login = () => {
     e.preventDefault();
     
     if (!email || !password) {
-      toast.error('Please fill in all fields');
+      toast.error(t('auth.fillAllFields'));
       return;
     }
 
     if (isSignup && !username) {
-      toast.error('Please enter a username');
+      toast.error(t('auth.enterUsername'));
       return;
     }
 
@@ -37,17 +39,17 @@ export const Login = () => {
       if (isSignup) {
         // Register new user - hardcoded as ADMINISTRATOR
         await authApi.register(username, email, password, 'ADMINISTRATOR');
-        toast.success('Account created successfully! Please login.');
+        toast.success(t('auth.accountCreated'));
         setIsSignup(false);
         setUsername('');
       } else {
         // Login existing user
         await login(email, password);
-        toast.success('Welcome back!');
+        toast.success(t('auth.welcomeBackMsg'));
         navigate('/dashboard');
       }
     } catch (error: any) {
-      toast.error(error.response?.data?.message || (isSignup ? 'Registration failed' : 'Login failed'));
+      toast.error(error.response?.data?.message || (isSignup ? t('auth.registrationFailed') : t('auth.loginFailed')));
     } finally {
       setIsLoading(false);
     }
@@ -66,18 +68,18 @@ export const Login = () => {
             <h1 className="text-4xl font-bold text-primary">taskCenture</h1>
           </div>
           <p className="text-muted-foreground">
-            {isSignup ? 'Create your account' : 'Welcome back'}
+            {isSignup ? t('auth.createAccount') : t('auth.welcomeBack')}
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {isSignup && (
             <div className="space-y-2">
-              <Label htmlFor="username">Username</Label>
+              <Label htmlFor="username">{t('auth.username')}</Label>
               <Input
                 id="username"
                 type="text"
-                placeholder="johndoe"
+                placeholder={t('auth.usernamePlaceholder')}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
@@ -86,11 +88,11 @@ export const Login = () => {
           )}
 
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t('auth.email')}</Label>
             <Input
               id="email"
               type="email"
-              placeholder="you@example.com"
+              placeholder={t('auth.emailPlaceholder')}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -98,11 +100,11 @@ export const Login = () => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">{t('auth.password')}</Label>
             <Input
               id="password"
               type="password"
-              placeholder="••••••••"
+              placeholder={t('auth.passwordPlaceholder')}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -110,7 +112,7 @@ export const Login = () => {
           </div>
 
           <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? 'Loading...' : (isSignup ? 'Sign Up' : 'Login')}
+            {isLoading ? t('common.loading') : (isSignup ? t('auth.signup') : t('auth.login'))}
           </Button>
         </form>
 
@@ -121,8 +123,8 @@ export const Login = () => {
             className="text-sm text-primary hover:underline"
           >
             {isSignup
-              ? 'Already have an account? Login'
-              : "Don't have an account? Sign up"}
+              ? t('auth.alreadyHaveAccount')
+              : t('auth.dontHaveAccount')}
           </button>
         </div>
       </Card>

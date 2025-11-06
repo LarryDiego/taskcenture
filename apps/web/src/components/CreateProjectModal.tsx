@@ -14,6 +14,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { useStore } from '@/store/useStore';
 import { usersApi } from '@/services/api';
 import { toast } from 'sonner';
+import { useTranslation } from 'react-i18next';
 
 interface CreateProjectModalProps {
   open: boolean;
@@ -28,6 +29,7 @@ interface User {
 }
 
 export const CreateProjectModal = ({ open, onClose }: CreateProjectModalProps) => {
+  const { t } = useTranslation();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [selectedTeamMembers, setSelectedTeamMembers] = useState<number[]>([]);
@@ -46,17 +48,21 @@ export const CreateProjectModal = ({ open, onClose }: CreateProjectModalProps) =
     try {
       setIsLoadingUsers(true);
       const users = await usersApi.getAll();
-      // Filter out the current user from the list
-      setAvailableUsers(users.filter(u => u.id !== currentUser?.id));
+      // Don't filter out any users - we need to show all of them
+      setAvailableUsers(users);
     } catch (error) {
       console.error('Failed to load users:', error);
-      toast.error('Failed to load users');
+      toast.error(t('project.failedToLoad'));
     } finally {
       setIsLoadingUsers(false);
     }
   };
 
   const handleTeamMemberToggle = (userId: number) => {
+    // Don't allow toggling the current user (they will be the owner)
+    if (currentUser && userId === currentUser.id) {
+      return;
+    }
     setSelectedTeamMembers(prev =>
       prev.includes(userId)
         ? prev.filter(id => id !== userId)
@@ -67,11 +73,11 @@ export const CreateProjectModal = ({ open, onClose }: CreateProjectModalProps) =
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) {
-      toast.error('Please enter a project name');
+      toast.error(t('project.pleaseEnterName'));
       return;
     }
     createProject(name, description, selectedTeamMembers);
-    toast.success('Project created successfully');
+    toast.success(t('project.createdSuccess'));
     setName('');
     setDescription('');
     setSelectedTeamMembers([]);
@@ -82,67 +88,73 @@ export const CreateProjectModal = ({ open, onClose }: CreateProjectModalProps) =
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create New Project</DialogTitle>
+          <DialogTitle>{t('project.createNew')}</DialogTitle>
           <DialogDescription>
-            Add a new project to organize your tasks
+            {t('project.addToOrganize')}
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <Label htmlFor="name">Project Name</Label>
+            <Label htmlFor="name">{t('project.name')}</Label>
             <Input
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Enter project name"
+              placeholder={t('project.enterName')}
             />
           </div>
           <div>
-            <Label htmlFor="description">Description</Label>
+            <Label htmlFor="description">{t('project.description')}</Label>
             <Textarea
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Enter project description"
+              placeholder={t('project.enterDescription')}
               rows={3}
             />
           </div>
           <div>
-            <Label>Team Members</Label>
+            <Label>{t('project.teamMembers')}</Label>
             <div className="border rounded-md p-3 max-h-48 overflow-y-auto space-y-2">
               {isLoadingUsers ? (
-                <p className="text-sm text-muted-foreground">Loading users...</p>
+                <p className="text-sm text-muted-foreground">{t('project.loadingUsers')}</p>
               ) : availableUsers.length === 0 ? (
-                <p className="text-sm text-muted-foreground">No other users available</p>
+                <p className="text-sm text-muted-foreground">{t('project.noUsersAvailable')}</p>
               ) : (
-                availableUsers.map((user) => (
-                  <div key={user.id} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={`user-${user.id}`}
-                      checked={selectedTeamMembers.includes(user.id)}
-                      onCheckedChange={() => handleTeamMemberToggle(user.id)}
-                    />
-                    <label
-                      htmlFor={`user-${user.id}`}
-                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                    >
-                      {user.username} ({user.email})
-                    </label>
-                  </div>
-                ))
+                availableUsers.map((user) => {
+                  const isCurrentUser = currentUser && user.id === currentUser.id;
+                  const isChecked = selectedTeamMembers.includes(user.id) || isCurrentUser;
+                  
+                  return (
+                    <div key={user.id} className="flex items-center space-x-2">
+                      <Checkbox
+                        id={`user-${user.id}`}
+                        checked={isChecked}
+                        disabled={isCurrentUser}
+                        onCheckedChange={() => handleTeamMemberToggle(user.id)}
+                      />
+                      <label
+                        htmlFor={`user-${user.id}`}
+                        className={`text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${isCurrentUser ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                      >
+                        {user.username} ({user.email}) {isCurrentUser && <span className="text-muted-foreground text-xs ml-2">- {t('project.youOwner')}</span>}
+                      </label>
+                    </div>
+                  );
+                })
               )}
             </div>
             {selectedTeamMembers.length > 0 && (
               <p className="text-sm text-muted-foreground mt-2">
-                {selectedTeamMembers.length} member(s) selected
+                {selectedTeamMembers.length} {t('project.additionalMembers')}
               </p>
             )}
           </div>
           <div className="flex justify-end gap-2">
             <Button type="button" variant="outline" onClick={onClose}>
-              Cancel
+              {t('common.cancel')}
             </Button>
-            <Button type="submit">Create Project</Button>
+            <Button type="submit">{t('dashboard.createProject')}</Button>
           </div>
         </form>
       </DialogContent>

@@ -14,7 +14,10 @@
     "filter": "Filtrar",
     "all": "Todos",
     "logout": "Cerrar sesión",
-    "settings": "Configuración"
+    "settings": "Configuración",
+    "success": "Éxito",
+    "error": "Error",
+    "pleaseEnter": "Por favor, ingrese"
   },
   "auth": {
     "login": "Iniciar sesión",
@@ -25,7 +28,16 @@
     "welcomeBack": "Bienvenido de nuevo",
     "createAccount": "Crea tu cuenta",
     "alreadyHaveAccount": "¿Ya tienes una cuenta? Iniciar sesión",
-    "dontHaveAccount": "¿No tienes una cuenta? Regístrate"
+    "dontHaveAccount": "¿No tienes una cuenta? Regístrate",
+    "fillAllFields": "Por favor, complete todos los campos",
+    "enterUsername": "Por favor, ingrese un nombre de usuario",
+    "accountCreated": "¡Cuenta creada con éxito! Por favor, inicie sesión.",
+    "welcomeBackMsg": "¡Bienvenido de nuevo!",
+    "registrationFailed": "Error en el registro",
+    "loginFailed": "Error al iniciar sesión",
+    "emailPlaceholder": "tu@ejemplo.com",
+    "usernamePlaceholder": "juanperez",
+    "passwordPlaceholder": "••••••••"
   },
   "dashboard": {
     "title": "Panel",
@@ -33,6 +45,9 @@
     "myProjects": "Mis Proyectos",
     "createProject": "Crear Proyecto",
     "noProjects": "Aún no hay proyectos. ¡Crea tu primer proyecto para comenzar!",
+    "createFirstProject": "Comienza creando tu primer proyecto para organizar tus tareas y colaborar con tu equipo.",
+    "waitForProject": "Verás proyectos aquí una vez que un administrador o gerente te agregue a un proyecto.",
+    "manageProgress": "Gestiona y rastrea el progreso de todos tus proyectos",
     "progress": "Progreso",
     "tasks": "Tareas",
     "completed": "Completadas"
@@ -45,7 +60,23 @@
     "delete": "Eliminar Proyecto",
     "deleteConfirm": "¿Estás seguro de que quieres eliminar",
     "deleteWarning": "Esta acción no se puede deshacer y eliminará todas las tareas de este proyecto.",
-    "backToDashboard": "Volver al Panel"
+    "backToDashboard": "Volver al Panel",
+    "update": "Actualizar Proyecto",
+    "updateDetails": "Actualizar detalles del proyecto y gestionar miembros del equipo",
+    "addToOrganize": "Agregar un nuevo proyecto para organizar tus tareas",
+    "enterName": "Ingrese el nombre del proyecto",
+    "enterDescription": "Ingrese la descripción del proyecto",
+    "teamMembers": "Miembros del Equipo",
+    "owner": "Propietario",
+    "youOwner": "Tú (Propietario)",
+    "loadingUsers": "Cargando usuarios...",
+    "noUsersAvailable": "No hay usuarios disponibles",
+    "additionalMembers": "miembro(s) adicional(es) seleccionado(s)",
+    "membersSelected": "seleccionados",
+    "createdSuccess": "Proyecto creado con éxito",
+    "updatedSuccess": "Proyecto actualizado con éxito",
+    "failedToLoad": "Error al cargar usuarios",
+    "pleaseEnterName": "Por favor, ingrese un nombre de proyecto"
   },
   "task": {
     "title": "Título",

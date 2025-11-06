@@ -14,7 +14,10 @@
     "filter": "Filter",
     "all": "All",
     "logout": "Logout",
-    "settings": "Settings"
+    "settings": "Settings",
+    "success": "Success",
+    "error": "Error",
+    "pleaseEnter": "Please enter"
   },
   "auth": {
     "login": "Login",
@@ -25,7 +28,16 @@
     "welcomeBack": "Welcome back",
     "createAccount": "Create your account",
     "alreadyHaveAccount": "Already have an account? Login",
-    "dontHaveAccount": "Don't have an account? Sign up"
+    "dontHaveAccount": "Don't have an account? Sign up",
+    "fillAllFields": "Please fill in all fields",
+    "enterUsername": "Please enter a username",
+    "accountCreated": "Account created successfully! Please login.",
+    "welcomeBackMsg": "Welcome back!",
+    "registrationFailed": "Registration failed",
+    "loginFailed": "Login failed",
+    "emailPlaceholder": "you@example.com",
+    "usernamePlaceholder": "johndoe",
+    "passwordPlaceholder": "••••••••"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -33,6 +45,9 @@
     "myProjects": "My Projects",
     "createProject": "Create Project",
     "noProjects": "No projects yet. Create your first project to get started!",
+    "createFirstProject": "Start by creating your first project to organize your tasks and collaborate with your team.",
+    "waitForProject": "You'll see projects here once an administrator or manager adds you to a project.",
+    "manageProgress": "Manage and track progress across all your projects",
     "progress": "Progress",
     "tasks": "Tasks",
     "completed": "Completed"
@@ -45,7 +60,23 @@
     "delete": "Delete Project",
     "deleteConfirm": "Are you sure you want to delete",
     "deleteWarning": "This action cannot be undone and will delete all tasks in this project.",
-    "backToDashboard": "Back to Dashboard"
+    "backToDashboard": "Back to Dashboard",
+    "update": "Update Project",
+    "updateDetails": "Update project details and manage team members",
+    "addToOrganize": "Add a new project to organize your tasks",
+    "enterName": "Enter project name",
+    "enterDescription": "Enter project description",
+    "teamMembers": "Team Members",
+    "owner": "Owner",
+    "youOwner": "You (Owner)",
+    "loadingUsers": "Loading users...",
+    "noUsersAvailable": "No users available",
+    "additionalMembers": "additional member(s) selected",
+    "membersSelected": "selected",
+    "createdSuccess": "Project created successfully",
+    "updatedSuccess": "Project updated successfully",
+    "failedToLoad": "Failed to load users",
+    "pleaseEnterName": "Please enter a project name"
   },
   "task": {
     "title": "Title",
