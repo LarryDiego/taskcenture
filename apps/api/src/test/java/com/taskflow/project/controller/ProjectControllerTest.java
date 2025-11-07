@@ -1,6 +1,8 @@
 package com.taskflow.project.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.taskflow.auth.model.User;
+import com.taskflow.auth.repository.UserRepository;
 import com.taskflow.project.model.Project;
 import com.taskflow.project.repository.ProjectRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,9 +31,13 @@ class ProjectControllerTest {
     @Autowired
     private ProjectRepository projectRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @BeforeEach
     void setUp() {
         projectRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test
@@ -62,8 +68,14 @@ class ProjectControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "COLLABORATOR")
+    @WithMockUser(username = "user@test.com", roles = "COLLABORATOR")
     void getAllProjects() throws Exception {
+        User user = new User();
+        user.setEmail("user@test.com");
+        user.setPassword("password");
+        user.setUsername("testuser");
+        userRepository.save(user);
+
         mockMvc.perform(get("/api/projects"))
                 .andExpect(status().isOk());
     }

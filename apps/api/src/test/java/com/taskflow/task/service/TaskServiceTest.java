@@ -57,6 +57,8 @@ class TaskServiceTest {
 
     @Test
     void deleteTask() {
+        when(taskRepository.existsById(1L)).thenReturn(true);
+
         taskService.deleteTask(1L);
 
         verify(taskRepository).deleteById(1L);

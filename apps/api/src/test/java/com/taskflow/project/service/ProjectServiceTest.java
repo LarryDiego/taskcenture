@@ -51,6 +51,8 @@ class ProjectServiceTest {
 
     @Test
     void deleteProject() {
+        when(projectRepository.existsById(1L)).thenReturn(true);
+
         projectService.deleteProject(1L);
 
         verify(projectRepository).deleteById(1L);

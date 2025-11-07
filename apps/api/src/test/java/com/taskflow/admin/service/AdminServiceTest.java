@@ -2,6 +2,7 @@ package com.taskflow.admin.service;
 
 import com.taskflow.auth.model.User;
 import com.taskflow.auth.repository.UserRepository;
+import com.taskflow.task.repository.TaskRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -21,6 +23,9 @@ class AdminServiceTest {
 
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private TaskRepository taskRepository;
 
     @InjectMocks
     private AdminServiceImpl adminService;
@@ -61,6 +66,9 @@ class AdminServiceTest {
 
     @Test
     void deleteUser() {
+        when(userRepository.existsById(1L)).thenReturn(true);
+        doNothing().when(taskRepository).unassignTasksFromUser(1L);
+
         adminService.deleteUser(1L);
 
         verify(userRepository).deleteById(1L);
