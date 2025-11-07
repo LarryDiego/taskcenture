@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { LogOut, Users, Settings } from 'lucide-react';
 import { useStore } from '@/store/useStore';
 import { useTranslation } from 'react-i18next';
+import { NotificationsDropdown } from './NotificationsDropdown';
 
 export const Header = () => {
   const { t } = useTranslation();
@@ -32,6 +33,7 @@ export const Header = () => {
               </span>
               <Badge variant="secondary">{user.role}</Badge>
             </div>
+            <NotificationsDropdown />
             {user.role === 'Administrator' && (
               <Button 
                 variant="outline" 

@@ -1,6 +1,7 @@
 package com.taskflow.project.service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.taskflow.auth.model.User;
 import com.taskflow.auth.repository.UserRepository;
 import com.taskflow.exception.ResourceNotFoundException;
+import com.taskflow.notification.service.NotificationService;
 import com.taskflow.project.model.Project;
 import com.taskflow.project.repository.ProjectRepository;
 
@@ -17,20 +19,33 @@ public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
+    private final NotificationService notificationService;
 
-    public ProjectServiceImpl(ProjectRepository projectRepository, UserRepository userRepository) {
+    public ProjectServiceImpl(ProjectRepository projectRepository, UserRepository userRepository, NotificationService notificationService) {
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
+        this.notificationService = notificationService;
     }
 
     @Override
     @Transactional
-    public Project createProject(Project project) {
+    public Project createProject(Project project, User currentUser) {
         // Ensure the owner is always in the team members
         if (project.getOwner() != null && !project.getTeamMembers().contains(project.getOwner())) {
             project.getTeamMembers().add(project.getOwner());
         }
-        return projectRepository.save(project);
+        
+        // Save the project first
+        Project savedProject = projectRepository.save(project);
+        
+        // Send notifications to all team members except the owner
+        for (User member : savedProject.getTeamMembers()) {
+            if (!member.getId().equals(savedProject.getOwner().getId())) {
+                notificationService.notifyUserAddedToProject(member, savedProject, currentUser);
+            }
+        }
+        
+        return savedProject;
     }
 
     @Override
@@ -54,12 +69,17 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional
-    public Project updateProject(Long id, Project project) {
+    public Project updateProject(Long id, Project project, User currentUser) {
         Project existingProject = projectRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Project", "id", id));
         
         existingProject.setName(project.getName());
         existingProject.setDescription(project.getDescription());
+        
+        // Track previous team members to identify newly added ones
+        Set<Long> previousMemberIds = existingProject.getTeamMembers().stream()
+                .map(User::getId)
+                .collect(Collectors.toSet());
         
         // Update team members if provided
         if (project.getTeamMembers() != null) {
@@ -83,6 +103,15 @@ public class ProjectServiceImpl implements ProjectService {
         Project savedProject = projectRepository.save(existingProject);
         // Force a flush to ensure changes are persisted
         projectRepository.flush();
+        
+        // Send notifications to newly added team members
+        for (User member : savedProject.getTeamMembers()) {
+            if (!previousMemberIds.contains(member.getId()) && 
+                !member.getId().equals(savedProject.getOwner().getId())) {
+                notificationService.notifyUserAddedToProject(member, savedProject, currentUser);
+            }
+        }
+        
         return savedProject;
     }
 

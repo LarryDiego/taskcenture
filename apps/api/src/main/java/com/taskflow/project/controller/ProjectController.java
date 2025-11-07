@@ -33,8 +33,10 @@ public class ProjectController {
 
     @PostMapping
     @PreAuthorize("hasAnyRole('MANAGER', 'ADMINISTRATOR')")
-    public Project createProject(@RequestBody Project project) {
-        return projectService.createProject(project);
+    public Project createProject(@RequestBody Project project, Authentication authentication) {
+        String email = authentication.getName();
+        User currentUser = userRepository.findByEmail(email);
+        return projectService.createProject(project, currentUser);
     }
 
     @GetMapping
@@ -51,8 +53,10 @@ public class ProjectController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('MANAGER', 'ADMINISTRATOR')")
-    public Project updateProject(@PathVariable Long id, @RequestBody Project project) {
-        return projectService.updateProject(id, project);
+    public Project updateProject(@PathVariable Long id, @RequestBody Project project, Authentication authentication) {
+        String email = authentication.getName();
+        User currentUser = userRepository.findByEmail(email);
+        return projectService.updateProject(id, project, currentUser);
     }
 
     @DeleteMapping("/{id}")

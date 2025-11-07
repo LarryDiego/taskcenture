@@ -130,5 +130,11 @@
     "spanish": "Español",
     "selectLanguage": "Seleccionar Idioma",
     "selectTheme": "Seleccionar Tema"
+  },
+  "notifications": {
+    "title": "Notificaciones",
+    "markAllRead": "Marcar todas como leídas",
+    "noNotifications": "No hay notificaciones nuevas",
+    "addedToProject": "Has sido agregado al proyecto \"{{projectName}}\" por {{username}}"
   }
 }
