@@ -1,5 +1,6 @@
 package com.taskflow.project.service;
 
+import com.taskflow.auth.model.User;
 import com.taskflow.project.model.Project;
 import com.taskflow.project.repository.ProjectRepository;
 import org.junit.jupiter.api.Test;
@@ -25,11 +26,13 @@ class ProjectServiceTest {
     @Test
     void createProject() {
         Project project = new Project();
+        User user = new User();
+
         project.setName("Test Project");
 
         when(projectRepository.save(project)).thenReturn(project);
 
-        projectService.createProject(project);
+        projectService.createProject(project, user);
 
         verify(projectRepository).save(project);
     }

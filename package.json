@@ -1,0 +1,13 @@
+{
+  "name": "taskcenture",
+  "private": true,
+  "scripts": {
+    "install:web": "cd apps/web && npm install",
+    "start": "concurrently \"npm run api\" \"npm run web\" ",
+    "api": "cd apps/api && ./gradlew bootRun",
+    "web": "cd apps/web && npm run dev"
+  },
+  "dependencies": {
+    "concurrently": "^9.0.0"
+  }
+}
